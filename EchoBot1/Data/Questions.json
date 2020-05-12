@@ -1,0 +1,59 @@
+[
+  {
+    "question": {
+      "en": "How useful was the information or service you received? Please choose (1.USEFUL,) (2.NOT USEFUL) "
+
+    },
+    "choices": {
+      "en": [ "USEFUL", "NOT USEFUL" ]
+     
+    }
+  },
+  {
+    "question": {
+      "eng": " Okay. What information or service  would you want us to provide. Please type your response:"
+
+    }
+  },
+  {
+    "question": {
+      "eng": "Well noted. How easy was it for you to access the information you required? Please choose (1.EASY,) (2.HARD) "
+      
+    },
+    "choices": {
+      "eng": [ "EASY", "HARD" ]
+     
+    }
+  },
+  {
+    "question": {
+      "eng": " You're almost done! How can i make it easier? Please type your response:"
+     
+    }
+  },
+  {
+    "question": {
+      "eng": "Thank you. How would you rate your overall experience with our services? Please choose (1.EXCELLENT,) (2.POOR) "
+      
+    },
+    "choices": {
+      "eng": [ "EXCELLENT", "POOR" ]
+     
+    }
+  },
+  {
+    "question": {
+      "eng": " Lastly, how can i make our experience better? Please type your response:"
+    }
+  },
+  {
+    "question": {
+      "eng": "Thank you very much for your feedback. We appreciate your support. Please choose from (1.MAIN MENU) to continue using the service."
+      
+    },
+    "choices": {
+      "eng": [ "MAIN MENU" ]
+    
+    }
+  }
+]
