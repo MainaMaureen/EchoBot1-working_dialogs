@@ -64,7 +64,7 @@ namespace EchoBot1.Dialogs
             return await stepContext.PromptAsync($"{nameof(QuestionDialog)}.description",  //stepContext is an object where values in that conversation are saved to
                 new PromptOptions
                 {
-                    Prompt = MessageFactory.Text("What infomation or service would you want us to provide?"),
+                    Prompt = MessageFactory.Text("Okay. What information or service  would you want us to provide. Please type your response:"),
                 }, cancellationToken);
         }
 
@@ -75,8 +75,8 @@ namespace EchoBot1.Dialogs
             return await stepContext.PromptAsync($"{nameof(QuestionDialog)}.response",
                 new PromptOptions
                 {
-                    Prompt = MessageFactory.Text("How useful was the information or service received?"),
-                    Choices = ChoiceFactory.ToChoices(new List<string> { "Useful", "Not Useful" }),
+                    Prompt = MessageFactory.Text("How useful was the information or service you received? Please choose (1.USEFUL,) (2.NOT USEFUL)"),
+                    Choices = ChoiceFactory.ToChoices(new List<string> { "USEFUL", "NOT USEFUL" }),
                     RetryPrompt = MessageFactory.Text("Please select from the options provided.") //---this will be for selected choices that are not among those given
                 }, cancellationToken);
         }
