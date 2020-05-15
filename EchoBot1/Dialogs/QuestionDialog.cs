@@ -5,11 +5,14 @@ using Microsoft.Bot.Builder.Dialogs.Choices;
 using EchoBot1.Models;
 using EchoBot1.Services;
 using System;
+using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
+using System.Net.Mime;
 
 namespace EchoBot1.Dialogs
 {
@@ -18,19 +21,22 @@ namespace EchoBot1.Dialogs
         #region Variables
         private readonly BotStateService _botStateService;
         #endregion
+        public static List<JObject> contents = new List<JObject>();
 
         public QuestionDialog(string dialogid, BotStateService botStateService) : base(dialogid)
         {
             _botStateService = botStateService ?? throw new System.ArgumentNullException(nameof(botStateService));
+
             InitializeWaterfallDialog();
         }
         private void InitializeWaterfallDialog()
         {
             //Create Waterfall Steps
             var waterfallSteps = new WaterfallStep[]
-            {
+            {           
                 DescriptionStepAsync,
                 QuestionStepAsync,
+                //Question2StepAsync,//This will be the function calling the json
                 SummaryStepAsync
             };
 
@@ -39,34 +45,46 @@ namespace EchoBot1.Dialogs
             AddDialog(new WaterfallDialog($"{nameof(QuestionDialog)}.mainFlow", waterfallSteps));   //Should hold all questions
             AddDialog(new TextPrompt($"{nameof(QuestionDialog)}.description"));  //Captures user's answer (typed)
             AddDialog(new ChoicePrompt($"{nameof(QuestionDialog)}.response"));  //Captures user's answer (choice)
+           // AddDialog(new TextPrompt($"{nameof(QuestionDialog)}.jsonfiles"));//Captures data in the json files
 
             //Set the starting Dialog
             InitialDialogId = $"{nameof(QuestionDialog)}.mainFlow";
         }
+        /*
+        public static List<JObject> GetFeedback()
+        {
+            content =  JsonReader.GetFeedback();
+            return content;
+        }      
+    */
+
         #region WaterfallSteps  
         private async Task<DialogTurnResult> DescriptionStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
             return await stepContext.PromptAsync($"{nameof(QuestionDialog)}.description",  //stepContext is an object where values in that conversation are saved to
                 new PromptOptions
                 {
-                    Prompt = MessageFactory.Text("Welcome to our Feedback Feature. Kindly answer the questions provided to enable us to serve you better."),
+                    Prompt = MessageFactory.Text("What infomation or service would you want us to provide?"),
                 }, cancellationToken);
         }
 
         private async Task<DialogTurnResult> QuestionStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {
-            stepContext.Values["description"] = (string)stepContext.Result; //Saves the output form the request to answer questions
+            stepContext.Values["description"] = (string)stepContext.Result; //Saves the output from the request to answer questions
 
             return await stepContext.PromptAsync($"{nameof(QuestionDialog)}.response",
                 new PromptOptions
                 {
                     Prompt = MessageFactory.Text("How useful was the information or service received?"),
-                    Choices = ChoiceFactory.ToChoices(new List<string> { "Useful", "Not Useful" }),  
+                    Choices = ChoiceFactory.ToChoices(new List<string> { "Useful", "Not Useful" }),
                     RetryPrompt = MessageFactory.Text("Please select from the options provided.") //---this will be for selected choices that are not among those given
                 }, cancellationToken);
         }
 
+
         ///// This is where to add the question dialog that calls the function reading from the json
+
+
 
         private async Task<DialogTurnResult> SummaryStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)
         {

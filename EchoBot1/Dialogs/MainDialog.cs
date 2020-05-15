@@ -43,7 +43,7 @@ namespace EchoBot1.Dialogs
             InitialDialogId = $"{nameof(MainDialog)}.mainFlow";
         }
         private async Task<DialogTurnResult> InitialStepAsync(WaterfallStepContext stepContext, CancellationToken cancellationToken)  
-        //InitialStepAsync takes in what user says, if it matchesthe regex statement to hi, call the WelcomeDialog, else the user is taken to the QuestionDialog
+        //InitialStepAsync takes in what user says, if it matches the regex statement to hi, call the WelcomeDialog, else the user is taken to the QuestionDialog
         {
             if (Regex.Match(stepContext.Context.Activity.Text.ToLower(), "hi").Success)
             {

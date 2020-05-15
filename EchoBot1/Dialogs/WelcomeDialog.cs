@@ -67,7 +67,7 @@ namespace EchoBot1.Dialogs
                 await _botStateService.UserProfileAccessor.SetAsync(stepContext.Context, userProfile);
             }
 
-            await stepContext.Context.SendActivityAsync(MessageFactory.Text(String.Format("Hi {0}. How can i help you today?", userProfile.Name)), cancellationToken);
+            await stepContext.Context.SendActivityAsync(MessageFactory.Text(String.Format("Welcome to our Feedback Feature {0}.  Kindly answer the questions provided to enable us to serve you better.  Type 'continue' to begin the process", userProfile.Name)), cancellationToken);
             return await stepContext.EndDialogAsync(null, cancellationToken);
         }
     }

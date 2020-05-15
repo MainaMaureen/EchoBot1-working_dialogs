@@ -23,7 +23,7 @@ namespace EchoBot1.Bots
         {
             try
             {
-                var content = new JsonReader().Index();
+                var content = new JsonReader().GetFeedback();
             }
             catch (Exception ex)
             {

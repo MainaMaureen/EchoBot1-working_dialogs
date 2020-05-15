@@ -10,27 +10,33 @@ using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
+using System.Data;
 
 namespace EchoBot1.Services
 {
     public class JsonReader
     {
-        public List<JObject> Index()
+        public List<JObject> GetFeedback()
         {
             //Start by getting the Json filepath
-            var path = AppContext.BaseDirectory + $"/Questions.json";
+            var path = AppContext.BaseDirectory + $"/Data/Questions.json";
             var content = new List<JObject>();
 
             if (File.Exists(path))
             {
                 content = JsonConvert.DeserializeObject<List<JObject>>(File.ReadAllText(path));
             }
+            //Console.WriteLine( content);
 
+            int index = 0;
+            while (index < content.Count)
+            {
+                content.ElementAt(index);
+                //Console.WriteLine(index);
+                index += 1;
+            }
             return content;
         }
     }
 }
 
-//stepContext.Values["description"]  =  (string)stepContext.Result;     --//stepContext is an object where values in that conversation are saved to.(it is NOT saved in state)
-
-    //import this to feedback dialog
